@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>  
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
+    <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+
+  </head>   
+
+<h1 style="color: red; font-family: «Playfair Display», «Didot», «Times New Roman», «Times», serif;">PRODUCTOS</h1>
+<model-viewer src="recursos/objetos/" 
+shadow-intensity="1" 
+ar
+ar-modes="scene-viewer quick-look WebXR Device API"
+camera-controls
+auto-rotate
+>
+  
+    <button slot="ar-button" id="ar-button">
+      View in your space
+    </button>
+  
+  
+    <button id="ar-failure">
+      AR is not tracking!
+    </button>
+  
+    <div class="slider">
+      <div class="slides">
+        <button class="slide" onclick="switchSrc(this, 'pizza')" style="background-image: url('recursos/objetos/pizza.png');">
+        </button><button class="slide" onclick="switchSrc(this, 'hamburguesa')" style="background-image: url('recursos/objetos/hamburguesa.png');">
+        <button class="slide " onclick="switchSrc(this, 'sandwich')" style="background-image: url('recursos/objetos/sandwich.png');">
+        </button><button class="slide" onclick="switchSrc(this, 'refresco')" style="background-image: url('recursos/objetos/refresco.png');">
+        </button><button class="slide" onclick="switchSrc(this, 'cafe')" style="background-image: url('recursos/objetos/cafe.png');">
+        <button class="slide" onclick="switchSrc(this, 'jugo')" style="background-image: url('recursos/objetos/jugo.png');">
+        </button><button class="slide" onclick="switchSrc(this, 'helado')" style="background-image: url('recursos/objetos/helado.png');">
+        <button class="slide" onclick="switchSrc(this, 'gelatina')" style="background-image: url('recursos/objetos/gelatina.png');">
+    
+        </button>
+      </div>
+    </div>
+  </model-viewer>
+  
+  <script type="module">
+    const modelViewer = document.querySelector("model-viewer");
+  
+    window.switchSrc = (element, name) => {
+      const base = "recursos/objetos/" + name;
+      modelViewer.src = base + '.glb';
+      modelViewer.poster = base + '.png';
+      const slides = document.querySelectorAll(".slide");
+      slides.forEach((element) => {element.classList.remove("selected");});
+      element.classList.add("selected");
+    };
+  
+    document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
+      ev.preventDefault();
+    });
+  </script>
+  
+  <style>
+    /* This keeps child nodes hidden while the element loads */
+    :not(:defined) > * {
+      display: none;
+    }
+  
+    model-viewer {
+        width: 1500px;
+        height: 500px;
+    }
+  
+    #ar-button {
+      background-repeat: no-repeat;
+      background-size: 220px 220px;
+      background-position: 50%;
+      background-color: #fff;
+      position:relative;
+      left: 150%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      bottom: 132px;
+      padding: 1000px 16px 0px 40px;
+      font-family: Roboto Regular, Helvetica Neue, sans-serif;
+      font-size: 14px;
+      color:#4285f4;
+      height: 36px;
+      line-height: 36px;
+      border-radius: 18px;
+      border: 1px solid #DADCE0;
+    }
+  
+    #ar-button:active {
+      background-color: #E8EAED;
+    }
+  
+    #ar-button:focus {
+      outline: none;
+    }
+  
+    #ar-button:focus-visible {
+      outline: 1px solid #4285f4;
+    }
+  
+    @keyframes circle {
+      from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
+      to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
+    }
+  
+    @keyframes elongate {
+      from { transform: translateX(100px); }
+      to   { transform: translateX(-100px); }
+    }
+  
+    model-viewer > #ar-prompt {
+      position: absolute;
+      left: 150%;
+      bottom: 575px;
+      animation: elongate 2s infinite ease-in-out alternate;
+      display: none;
+    }
+  
+    model-viewer[ar-status="session-started"] > #ar-prompt {
+      display: block;
+    }
+  
+    model-viewer > #ar-prompt > img {
+      animation: circle 4s linear infinite;
+    }
+  
+    model-viewer > #ar-failure {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 175px;
+      display: none;
+    }
+  
+    model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+      display: block;
+    }
+  
+    .slider {
+      width: 100%;
+      text-align: center;
+      overflow: hidden;
+      position:20%;
+      bottom: 16px;
+    }
+  
+    .slides {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+  
+    .slide {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #fff;
+      margin-right: 10px;
+      border-radius: 10px;
+      border: none;
+      display: flex;
+    }
+  
+    .slide.selected {
+      border: 2px solid #4285f4;
+    }
+  
+    .slide:focus {
+      outline: none;
+    }
+  
+    .slide:focus-visible {
+      outline: 1px solid #4285f4;
+    }
+  
+  </style>
+
+</html>
