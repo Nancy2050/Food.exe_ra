@@ -1,3 +1,3 @@
 <?php
-require_once 'pruebas.html';
+    require_once 'pruebas.html';
 ?>
